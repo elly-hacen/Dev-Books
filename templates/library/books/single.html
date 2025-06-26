@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title|default:"Book" }}{% endblock %}
+{% block content %}
+<main class="bg-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+      <!-- Book Image -->
+      <div class="w-full bg-gray-100 rounded-lg overflow-hidden shadow">
+        <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-full h-auto object-cover transition hover:scale-105 duration-300" />
+      </div>
+
+      <!-- Book Info -->
+      <div class="md:col-span-2 flex flex-col gap-6">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-900">{{ book.title }}</h1>
+          <p class="text-lg text-gray-600 mt-1">by {{ book.author }}</p>
+          <p class="mt-4 text-gray-700 text-base leading-relaxed line-clamp-4 sm:line-clamp-none">
+            {{ book.description }}
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-3 mt-4">
+          {% if user.is_authenticated %}
+            {% if fav %}
+              <a href="{% url 'users:favorite' %}" class="bg-red-100 text-red-700 px-4 py-2 rounded font-semibold hover:bg-red-200 transition">
+                <i class="fa fa-heart mr-1"></i> Remove Favorite
+              </a>
+            {% else %}
+              <a href="{% url 'users:add_to_favorite' book.id %}" class="bg-green-600 text-white px-4 py-2 rounded font-semibold hover:bg-green-700 transition">
+                <i class="fa fa-bookmark mr-1"></i> Add to Favorite
+              </a>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'users:login' %}" class="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition">
+              <i class="fa fa-sign-in-alt mr-1"></i> Login to Favorite
+            </a>
+          {% endif %}
+
+          {% if book.pdf_file %}
+            <a href="{{ book.pdf_file.url }}" target="_blank" class="border border-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-100 font-medium transition">
+              <i class="fa fa-file-pdf mr-1 text-red-600"></i> Read PDF
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Book Metadata -->
+    <div class="mt-12 bg-gray-50 p-6 rounded-lg grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+      <div>
+        <div class="font-semibold text-gray-800">Category</div>
+        <div class="text-gray-600">{{ book.book_genre }}</div>
+      </div>
+      <div>
+        <div class="font-semibold text-gray-800">Pages</div>
+        <div class="text-gray-600">656</div>
+      </div>
+      <div>
+        <div class="font-semibold text-gray-800">Published</div>
+        <div class="text-gray-600">24 October 2011</div>
+      </div>
+      <div>
+        <div class="font-semibold text-gray-800">ISBN</div>
+        <div class="text-gray-600">1-4516-4853-7</div>
+      </div>
+    </div>
+
+    <!-- Full Description -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Full Description</h2>
+      <article class="prose prose-slate max-w-none">
+        {{ book.description|linebreaks }}
+      </article>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

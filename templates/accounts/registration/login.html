@@ -1,0 +1,81 @@
+{% extends "accounts/sub_base.html" %}
+{% block title %}Sign In{% endblock %}
+{% load widget_tweaks %}
+
+{% block sub_content %}
+<div class="min-h-screen flex flex-col justify-center px-6 py-12 bg-gray-50 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="text-center text-3xl font-bold text-gray-800">
+     Login to <span class="text-purple-600">Dev Books</span>
+    </h2>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <!-- Social Logins -->
+    <div class="space-y-4">
+      <button class="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white py-2 text-sm font-medium text-gray-800 hover:bg-gray-100">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 .5C5.649.5.5 5.649.5 12c0 5.081 3.293 9.382 7.865 10.902.575.105.785-.25.785-.555 0-.275-.01-1.006-.015-1.976-3.202.694-3.878-1.543-3.878-1.543-.523-1.333-1.277-1.688-1.277-1.688-1.045-.714.08-.699.08-.699 1.157.082 1.767 1.188 1.767 1.188 1.028 1.76 2.697 1.252 3.354.958.105-.745.402-1.253.732-1.54-2.555-.29-5.24-1.277-5.24-5.684 0-1.255.449-2.28 1.188-3.083-.12-.29-.515-1.455.11-3.034 0 0 .967-.31 3.168 1.175a10.938 10.938 0 0 1 2.884-.388c.978.005 1.962.132 2.884.388 2.2-1.485 3.164-1.175 3.164-1.175.627 1.579.232 2.744.112 3.034.742.803 1.186 1.828 1.186 3.083 0 4.418-2.69 5.39-5.252 5.673.415.354.784 1.047.784 2.112 0 1.524-.015 2.752-.015 3.127 0 .309.206.667.79.553C20.709 21.377 24 17.078 24 12c0-6.351-5.149-11.5-11.5-11.5Z"/>
+        </svg>
+        Sign in with GitHub
+      </button>
+
+      <button class="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white py-2 text-sm font-medium text-gray-800 hover:bg-gray-100">
+        <img class="h-5 w-5" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+        Sign in with Google
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div class="mt-6 relative">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center text-sm">
+        <span class="bg-gray-50 px-2 text-gray-500">Or continue with</span>
+      </div>
+    </div>
+
+    <!-- Errors -->
+    {% if form.errors %}
+    <div class="mt-6 text-red-600 text-sm text-center">
+      <strong>Oops!</strong> {{ form.non_field_errors|first }}
+    </div>
+    {% endif %}
+
+    <!-- Form -->
+    <form method="post" action="{% url 'users:login' %}" class="space-y-6 mt-6">
+      {% csrf_token %}
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.username.label }}</label>
+        {{ form.username|add_class:"w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-800" }}
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ form.password.label }}</label>
+        {{ form.password|add_class:"w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-800" }}
+      </div>
+
+      <div>
+        <button type="submit"
+          class="w-full flex justify-center rounded-md bg-black py-2 px-4 text-white hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500">
+          Login
+        </button>
+      </div>
+    </form>
+
+    <!-- Footer Links -->
+    <div class="mt-6 text-sm text-center text-gray-600 space-y-1">
+      <p>
+        Need an account?
+        <a href="{% url 'users:signup' %}" class="text-purple-600 hover:underline">Sign up</a>
+      </p>
+      <p>
+        Forgot your password?
+        <a href="{% url 'users:password_reset' %}" class="text-purple-600 hover:underline">Reset it</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

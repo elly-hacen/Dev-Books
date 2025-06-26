@@ -1,0 +1,23 @@
+{% extends "accounts/sub_base.html" %}
+{% block title %}Delete Account Confirmation{% endblock %}
+{% block content %}
+
+<div class="max-w-xl mx-auto mt-16 px-4 sm:px-6 lg:px-8">
+  <div class="bg-red-100 border border-red-300 text-red-800 text-sm rounded-md p-6 shadow-sm">
+    <h2 class="text-xl font-semibold mb-2">Your Account has been Deactivated</h2>
+    <p class="mb-2">
+      Your account has been deactivated. It will be scheduled for automatic deletion after a month.
+    </p>
+    <hr class="border-red-300 my-4" />
+    <p class="text-sm">For any concerns, please contact support.</p>
+  </div>
+
+  <div class="text-center mt-8">
+    <h1 class="text-lg font-bold text-gray-800">Please, Login</h1>
+    <a href="{% url 'users:login' %}" class="mt-2 inline-block text-purple-600 hover:underline text-sm">
+      Go to Login Page →
+    </a>
+  </div>
+</div>
+
+{% endblock %}

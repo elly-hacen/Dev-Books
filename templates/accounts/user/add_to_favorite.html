@@ -1,0 +1,43 @@
+{% extends "accounts/sub_base.html" %}
+{% block title %}Favorite Books{% endblock %}
+
+{% block sub_content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-2">📚 Your Favorites</h1>
+  <p class="text-gray-500 mb-6">A curated list of your saved programming treasures.</p>
+
+  {% if favorite %}
+    <div class="grid gap-6 md:grid-cols-2">
+      {% for book in favorite %}
+        <div class="flex bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition">
+          {% if book.image %}
+            <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-32 h-auto object-cover rounded-l-lg" />
+          {% endif %}
+          <div class="flex-1 p-4 flex flex-col justify-between">
+            <div>
+              <a href="{% url 'library:book_detail' book.slug %}" class="text-lg font-semibold text-purple-700 hover:underline">
+                {{ book.title }}
+              </a>
+              <p class="text-sm text-gray-500">{{ book.description|truncatechars:80 }}</p>
+              <p class="text-xs text-gray-400 mt-1">By {{ book.author }}</p>
+            </div>
+            <div class="mt-4">
+              <a href="{% url 'users:add_to_favorite' book.id %}"
+                class="text-sm text-red-600 hover:text-red-800 hover:underline transition">
+                Remove from Favorites
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center text-gray-500 mt-16">
+      <p class="text-lg">You haven’t added any favorites yet 😔</p>
+      <a href="{% url 'library:all_books' %}" class="text-purple-600 mt-2 inline-block hover:underline">
+        Browse books →
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Dev Books{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6095198bf0.js" crossorigin="anonymous"></script>
+    <link href="{% block stylesheet %}{% endblock %}" rel="stylesheet" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-gray-900 font-sans antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 bg-white shadow z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="{% url 'library:books_home' %}" class="flex items-center gap-2 text-xl font-bold tracking-tight text-blue-600">
+          <i class="fa-brands fa-linux text-2xl"></i>
+          Dev Books
+        </a>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+          <a href="{% url 'library:books_home' %}" class="hover:text-blue-600 transition">Home</a>
+          <a href="{% url 'library:all_books' %}" class="hover:text-blue-600 transition">Library</a>
+          <a href="#" class="hover:text-blue-600 transition">About</a>
+          <a href="#" class="hover:text-blue-600 transition">Contact</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-4">
+          <!-- Search -->
+          <form class="hidden md:block" method="GET" action="#">
+            <input
+              type="search"
+              name="q"
+              placeholder="Search books..."
+              class="w-44 px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              required
+            />
+          </form>
+
+          <!-- Settings -->
+          <a href="{% url 'users:accounts-settings' %}" class="text-gray-600 hover:text-blue-600 transition">
+            <i class="fa-solid fa-gear text-xl"></i>
+          </a>
+
+          <!-- Mobile Menu -->
+          <button class="md:hidden focus:outline-none">
+            <svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-7xl mx-auto px-6 py-10">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t mt-12 pt-6 pb-4 text-center text-sm text-gray-500">
+      © 2025 Dev Books • Built for Developers ❤️
+    </footer>
+  </body>
+</html>
